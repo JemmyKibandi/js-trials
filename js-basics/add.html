@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html data-theme="valentine">
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+      <title>Add to Cart Example</title>
+      
+
+</head>
+<body>
+<div class="flex justify-center items-center h-screen">
+<div class="card w-96 bg-pink-300 bg-base-100 shadow-xl">
+
+    <div class="card-body">
+
+  <h1  class="text-3xl font-bold mb-4">Product Catalog</h1>
+
+  <div>
+    <img class="w-15 h-20" src="./12.jpg"/>
+    <h2 class="text-3xl mb-4">Cashmere Sweater</h2>
+    <p>Price: $10.99</p>
+    <div class="justify-center">
+    <button onclick="addToCart('Product 1', 10.99)"  
+    class="px-4 py-2 rounded-lg font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-white text-white shadow-md hover:from-pink-600 hover:via-purple-600 hover:to-white transition-all duration-300">Add to Cart</button>
+  </div></div>
+
+  <div>
+    <img src="./11.jpg" class="w-15 h-20" />
+    <h2  class="text-3xl mb-4">Cashmere Pantsss</h2>
+    <p>Price: $20.49</p>
+    <div class="justify-end">
+    <button onclick="addToCart('Product 2', 20.49)" 
+    class="px-4 py-2 rounded-lg font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-white text-white shadow-md hover:from-pink-600 hover:via-purple-600 hover:to-white transition-all duration-300">Add to Cart</button>
+  </div></div>
+
+  <h2 class="text-3xl mb-4">Shopping Cart</h2>
+  <ul id="cart"></ul>
+</div></div>
+</div>
+  <script>
+    // Array to store the cart items
+    const cartItems = [];
+
+    // Function to add items to the cart
+    function addToCart(productName, price) {
+      cartItems.push({ name: productName, price: price });
+      displayCart();
+    }
+
+    // Function to remove an item from the cart
+    function removeFromCart(index) {
+      cartItems.splice(index, 1);
+      displayCart();
+    }
+
+    // Function to display the cart
+    function displayCart() {
+      const cartList = document.getElementById("cart");
+      cartList.innerHTML = "";
+
+      let totalPrice = 0;
+
+      cartItems.forEach((item, index) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+
+        function styleDeleteButton(buttonElement) {
+          buttonElement.classList.add(
+            'px-2',
+            'py-1',
+            'rounded-sm',
+            'font-semibold',
+            'bg-red-500',
+            'text-white',
+            'shadow-md',
+            'hover:bg-red-600',
+            'transition-all',
+            'duration-300'
+          );
+        }
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = " Delete";
+        removeButton.onclick = () => removeFromCart(index);
+        styleDeleteButton(removeButton);
+
+        listItem.appendChild(removeButton);
+        cartList.appendChild(listItem);
+
+        totalPrice += item.price;
+      });
+
+      const totalPriceElement = document.createElement("li");
+      totalPriceElement.textContent = `Total: $${totalPrice.toFixed(2)}`;
+      cartList.appendChild(totalPriceElement);
+      
+    }
+  </script>
+</body>
+</html>
