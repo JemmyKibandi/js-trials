@@ -1,65 +1,87 @@
 <!DOCTYPE html>
 <html data-theme="valentine">
 <head>
-
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-      <title>Welcome page</title>
-      
-
+  <link
+    href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link rel="icon" href="./logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hidden-section {
+      display: none;
+    }
+  </style>
+  <title>JS AUTH</title>
 </head>
-<body>
-        <!-- NAVBAR -->
-    <div class="navbar bg-base-100">
-        <div class="flex-1">
-          <a class="btn btn-ghost normal-case text-xl">JEMMY</a>
+<body class="bg-pink-100 flex justify-center items-center min-h-screen">
+
+  <!-- Login and Authentication Card -->
+  <div class="flex justify-center items-center h-full">
+    <div class="p-8 md:w-96 rounded-lg shadow-lg flex flex-col flex justify-center items-center" style="/* From https://css.glass */
+    background: #00000000;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(11.8px);
+    -webkit-backdrop-filter: blur(11.8px);">
+      <div class="transition" id="loginSection">
+        <h1 class="text-3xl font-semibold mb-6">Welcome Back 😁!</h1>
+        <input type="email" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border">
+        <input type="password" placeholder="Password" class="w-full px-6 py-3 rounded-lg mb-6 border">
+        <div style="display: flex; align-items: center; justify-content: center;">
+        <button  name="login" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300 ">
+          Log In
+        </button>
         </div>
-        <div class="flex-none">
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle">
-              <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                <span class="badge badge-sm indicator-item" id="cartLength">0</span>
-              </div>
-            </label>
-            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-              <div class="card-body">
-                <ul id="cart"></ul>
-                <div class="card-actions">
-                  <button class="btn btn-primary btn-block">Checkout</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img src="./pic.jpg" />
-              </div>
-            </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li>
-                <a class="justify-between">
-                  Profile
-                  <span class="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
-            </ul>
-          </div>
-        </div>
-    </div>
-    <!-- INTRO HERO -->
-    <div class="hero min-h-screen" style="background-image: url('https://media.istockphoto.com/id/1294119130/photo/idyllic-meadow.jpg?s=612x612&w=0&k=20&c=CJvuO6Hwa9q2aJlqNOUn1QpJVyzYcDGhK_mmCnwGlxQ=');">
-        <div class="hero-overlay bg-opacity-60"></div>
-        <div class="hero-content text-center text-neutral-content">
-          <div class="max-w-md">
-            <h1 class="mb-5 text-5xl font-bold">That's what we do!</h1>
-            <p class="mb-5">Welcome aboard! 🎉 <br>We're thrilled to have you here. Your authentication was successful, and you're now part of our community. Feel free to explore, connect, and make the most of our platform.</p>
-            <button class="btn btn-primary">YEIIIII</button>
-          </div>
-        </div>
+        <p class="mt-6 text-base text-gray-600">Don't have an account? <a href="#" class="text-pink-500" onclick="showSignUp()">Sign Up</a></p>
       </div>
+
+    
+    <div class="transition hidden-section" id="signUpSection">
+        <h1 class="text-3xl font-semibold mb-6">Hey You 👀 !</h1>
+        <input type="text" placeholder="Full Name" class="w-full px-6 py-3 rounded-lg mb-4 border" required>
+        <input type="text" placeholder="Phone Number" class="w-full px-6 py-3 rounded-lg mb-4 border">
+        <input type="text" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border">
+        <input type="password" placeholder="First Password"  id="password1" class="w-full px-6 py-3 rounded-lg mb-4 border">
+        <input type="password" placeholder="Confirm Password"  id="password2" class="w-full px-6 py-3 rounded-lg mb-6 border">
+        <div style="display: flex; align-items: center; justify-content: center;">
+        <button name="submit" onclick="comparePasswords()" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300">
+          Sign up
+        </button>
+        <p id="result"></p>
+        </div>
+        <p class="mt-6 text-base text-gray-600">Already have an account? <a href="#" class="text-pink-500" onclick="showLogin()">Log In</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./index.js"></script>
+  <script>
+  // JS CODE TO SLIDE CARDS
+function showSignUp() {
+  document.getElementById('loginSection').classList.add('hidden-section');
+  document.getElementById('signUpSection').classList.remove('hidden-section');
+}
+
+function showLogin() {
+  document.getElementById('loginSection').classList.remove('hidden-section');
+  document.getElementById('signUpSection').classList.add('hidden-section');
+}
+// JS CODE TO COMPARE PASSWORDS
+function comparePasswords() {
+  const password1 = document.getElementById("password1").value;
+  const password2 = document.getElementById("password2").value;
+
+  if (password1 === password2) {
+    document.getElementById("result").textContent = "Passwords match!";
+  } else {
+    document.getElementById("result").textContent = "Passwords do not match.";
+  }
+}</script>
 </body>
 </html>
