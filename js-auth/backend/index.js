@@ -1,5 +1,6 @@
 // STEP 1: import express/ other variables
 const express = require('express');
+const path = require("path");
 const mysql = require('mysql');
 // STEP 2: declare a variable of it's method
 const app = express();
@@ -28,7 +29,7 @@ connection.connect((err, connection) => {
 
 // Define routes
 app.get('/', (req, res) => {
-  res.send('Hello, this is your Node.js server!');
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // Code to GET data to the database
@@ -52,7 +53,7 @@ app.post('/register', (req, res) => {
       console.error('Error inserting data:', err);
       res.status(500).send('Internal Server Error');
     } else {
-      res.send('User added successfully');
+      res.sendFile(path.join(__dirname, "../frontend/index.html"));
     }
   });
 });

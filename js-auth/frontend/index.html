@@ -31,7 +31,7 @@
     -webkit-backdrop-filter: blur(11.8px);">
       <div class="transition" id="loginSection">
         <h1 class="text-3xl font-semibold mb-6">Welcome Back 😁!</h1>
-        <form>
+        <form id="ourform" action="/login" method="GET">
         <input type="email" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border">
         <input type="password" placeholder="Password" class="w-full px-6 py-3 rounded-lg mb-6 border">
         <div style="display: flex; align-items: center; justify-content: center;">
@@ -45,17 +45,18 @@
     
     <div class="transition hidden-section" id="signUpSection">
         <h1 class="text-3xl font-semibold mb-6">Hey You 👀 !</h1>
-        <form id="myForm">
-        <input type="text" placeholder="Full Name" class="w-full px-6 py-3 rounded-lg mb-4 border" required>
-        <input type="text" placeholder="Phone Number" class="w-full px-6 py-3 rounded-lg mb-4 border"required>
-        <input type="text" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border"required>
-        <input type="password" placeholder="First Password"  id="password1" class="w-full px-6 py-3 rounded-lg mb-4 border"required>
-        <input type="password" placeholder="Confirm Password"  id="password2" class="w-full px-6 py-3 rounded-lg mb-6 border"required>
-        <div id="result" class="text-red-500 mt-2"></div>
-        <div style="display: flex; align-items: center; justify-content: center;">
-        <button name="submit" onclick="comparePasswords()" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300">
-          Sign up
-        </button></form>
+        <form id="myForm" action="/register" method="POST">
+          <input type="text" name="fname" value="" id="fname" placeholder="Full Name" class="w-full px-6 py-3 rounded-lg mb-4 border" required />
+          <input type="tel" name="phone"  value="" id="phone" placeholder="Phone Number" class="w-full px-6 py-3 rounded-lg mb-4 border" required />
+          <input type="email" name="email"  value="" id="email" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border" required />
+          <input type="password" name="pword"  value="" placeholder="Password"  id="password1" class="w-full px-6 py-3 rounded-lg mb-4 border" required />
+          <input type="password" name="actpword" value=""  placeholder="Confirm Password"  id="password2" class="w-full px-6 py-3 rounded-lg mb-6 border" required />
+          <div id="result" class="text-red-500 mt-2"></div>
+          <div style="display: flex; align-items: center; justify-content: center;">
+          <button name="submit" onclick="comparePasswords()" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300">
+            Sign up
+          </button>
+        </form>
         </div>
         <p class="mt-6 text-base text-gray-600">Already have an account? <a href="#" class="text-pink-500" onclick="showLogin()">Log In</a></p>
       </div>
