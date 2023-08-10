@@ -1,14 +1,18 @@
 // STEP 1: import express/ other variables
 const express = require('express');
 const path = require("path");
+const bp = require("body-parser")
 const mysql = require('mysql');
 // STEP 2: declare a variable of it's method
 const app = express();
 const PORT = 3000;
 
 // MIDDLEWARE
-app.use(express.urlencoded({ extended: true })); // For parsing form data
-
+app.use(express.json());
+app.use(bp.urlencoded({extended: true}))
+app.use(bp.json())
+// Serve static files from the "frontend" directory
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 //STEP 4: code to connect to the database
 const connection = mysql.createConnection({
@@ -68,22 +72,21 @@ app.post('/login', async (req, res) => {
     connection.query(sql, [email], (err, results) => {
       if (err) {
         console.error('Error:', err);
-        res.status(500).json({ success: false, message: 'Internal server error' });
-        return;
+        return res.status(500).json({ success: false, message: 'Internal server error' });
       }
 
-      if (results.length > 0 && results[0].password === password) {
-        res.json({ success: true, user: results[0] });
+      if (results.length > 0 && results[0].pword === password) {
+        return res.status(200).json({ success: true, user: results[0] });
       } else {
-        res.sendFile(path.join(__dirname, "../frontend/index.html"));
+        return res.status(401).json({ success: false, message: 'Invalid credentials' });
       }
+      
     });
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).json({ success: false, message: 'Internal server errors, wueh' });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
-
 
 // STEP LAST: listen for the port
 app.listen(PORT, () => console.log(`Server is running at port ${PORT}`))

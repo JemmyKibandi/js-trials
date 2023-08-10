@@ -32,12 +32,12 @@
       <div class="transition" id="loginSection">
         <h1 class="text-3xl font-semibold mb-6">Welcome Back 😁!</h1>
         <form id="ourform" action="/login" method="post">
-        <input type="email" placeholder="Email Address" value="" id="emaill" class="w-full px-6 py-3 rounded-lg mb-4 border">
-        <input type="password" placeholder="Password" value="" id="passwordd" class="w-full px-6 py-3 rounded-lg mb-6 border">
+        <input type="email" placeholder="Email Address" value="" id="emaill" class="w-full px-6 py-3 rounded-lg mb-4 border" />
+        <input type="password" placeholder="Password" value="" id="passwordd" class="w-full px-6 py-3 rounded-lg mb-6 border" />
         <div style="display: flex; align-items: center; justify-content: center;">
-        <button  name="login" id="login" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300 ">
-          Log In
-        </button>
+          <button type="submit"  name="login" id="login" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300 ">
+            Log In
+          </button>
         </div>
         <p class="mt-6 text-base text-gray-600">Don't have an account? <a href="#" class="text-pink-500" onclick="showSignUp()">Sign Up</a></p>
       </div>
@@ -78,48 +78,57 @@
 //   signupButton.disabled = true;
 //   loginButton.disabled = false;
 // });
-      document.getElementById('ourform').addEventListener('login', async (e) => {
-      e.preventDefault();
+  document.getElementById('ourform').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const username = document.getElementById('emaill').value;
-      const password = document.getElementById('passwordd').value;
+    // Extract the email and password values from the inputs in the login form
+    const email = document.getElementById('emaill').value;
+    const password = document.getElementById('passwordd').value;
 
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email, password })
-        });
+    // Placing them in an object that we will send as an object request so that we can compare with the ones in the db
+    const credentials = {
+      email: email,
+      password: password
+    };
 
-        const data = await response.json();
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
 
-        if (data.success) {
-          // Authentication successful
-          // You can save user data or a token in local storage or a cookie
-          localStorage.setItem('user', JSON.stringify(data.user));
+      const data = await response.json();
 
-          // Redirect to the dashboard or another page
-          window.location.href = '/js-auth/frontend/home.html';
-        } else {
-          // Authentication failed, show an error message
-          alert(data.message);
-        }
-      } catch (error) {
-        console.error('Error:', error);
+      // Handling successful login scenario
+      if (data.success) {
+        // Save user data or a token in local storage or a cookie
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        // Redirect to the home page upon successful login
+        window.location.href = '/js-auth/frontend/home.html';
+
+        // Handling fucked up login scenario, maybe, bad credentials or sth
+      } else {
+        alert(data.message);
       }
-    });
-  // JS CODE TO SLIDE CARDS
-function showSignUp() {
-  document.getElementById('loginSection').classList.add('hidden-section');
-  document.getElementById('signUpSection').classList.remove('hidden-section');
-}
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
 
-function showLogin() {
-  document.getElementById('loginSection').classList.remove('hidden-section');
-  document.getElementById('signUpSection').classList.add('hidden-section');
-}
+  // JS CODE TO SLIDE CARDS
+  function showSignUp() {
+    document.getElementById('loginSection').classList.add('hidden-section');
+    document.getElementById('signUpSection').classList.remove('hidden-section');
+  }
+
+  function showLogin() {
+    document.getElementById('loginSection').classList.remove('hidden-section');
+    document.getElementById('signUpSection').classList.add('hidden-section');
+  }
 // JS CODE TO COMPARE PASSWORDS
 document.getElementById("myForm").addEventListener("submit", function(event) {
   const username = document.getElementById("username").value;
@@ -131,19 +140,20 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent form submission
     alert("All fields are required.");  }})
 
-function comparePasswords() {
-  const password1 = document.getElementById("password1").value;
-  const password2 = document.getElementById("password2").value;
+  function comparePasswords() {
+    const password1 = document.getElementById("password1").value;
+    const password2 = document.getElementById("password2").value;
 
-  if (password1 === password2) {
-    document.getElementById("result").innerHTML = "Passwords match!";
-    document.getElementById("result").classList.remove("text-red-500");
-    document.getElementById("result").classList.add("text-green-500");
-  } else {
-    document.getElementById("result").innerHTML = "Passwords do not match.";
-    document.getElementById("result").classList.remove("text-green-500");
-    document.getElementById("result").classList.add("text-red-500");
- }
-}</script>
+    if (password1 === password2) {
+      document.getElementById("result").innerHTML = "Passwords match!";
+      document.getElementById("result").classList.remove("text-red-500");
+      document.getElementById("result").classList.add("text-green-500");
+    } else {
+      document.getElementById("result").innerHTML = "Passwords do not match.";
+      document.getElementById("result").classList.remove("text-green-500");
+      document.getElementById("result").classList.add("text-red-500");
+  }
+  }
+</script>
 </body>
 </html>
