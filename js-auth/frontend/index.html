@@ -31,11 +31,11 @@
     -webkit-backdrop-filter: blur(11.8px);">
       <div class="transition" id="loginSection">
         <h1 class="text-3xl font-semibold mb-6">Welcome Back 😁!</h1>
-        <form id="ourform" action="/login" method="GET">
-        <input type="email" placeholder="Email Address" class="w-full px-6 py-3 rounded-lg mb-4 border">
-        <input type="password" placeholder="Password" class="w-full px-6 py-3 rounded-lg mb-6 border">
+        <form id="ourform" action="/login" method="post">
+        <input type="email" placeholder="Email Address" value="" id="emaill" class="w-full px-6 py-3 rounded-lg mb-4 border">
+        <input type="password" placeholder="Password" value="" id="passwordd" class="w-full px-6 py-3 rounded-lg mb-6 border">
         <div style="display: flex; align-items: center; justify-content: center;">
-        <button  name="login" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300 ">
+        <button  name="login" id="login" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300 ">
           Log In
         </button>
         </div>
@@ -53,7 +53,7 @@
           <input type="password" name="actpword" value=""  placeholder="Confirm Password"  id="password2" class="w-full px-6 py-3 rounded-lg mb-6 border" required />
           <div id="result" class="text-red-500 mt-2"></div>
           <div style="display: flex; align-items: center; justify-content: center;">
-          <button name="submit" onclick="comparePasswords()" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300">
+          <button name="submit" id="submit" onclick="comparePasswords()" class="bg-pink-500 text-white px-8 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-all duration-300">
             Sign up
           </button>
         </form>
@@ -64,6 +64,52 @@
   </div>
 </div>
   <script>
+//     const loginButton = document.getElementById('login');
+// const signupButton = document.getElementById('submit');
+
+// loginButton.addEventListener('click', () => {
+//   // Disable the login button and enable the signup button
+//   loginButton.disabled = true;
+//   signupButton.disabled = false;
+// });
+
+// signupButton.addEventListener('click', () => {
+//   // Disable the signup button and enable the login button
+//   signupButton.disabled = true;
+//   loginButton.disabled = false;
+// });
+      document.getElementById('ourform').addEventListener('login', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('emaill').value;
+      const password = document.getElementById('passwordd').value;
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Authentication successful
+          // You can save user data or a token in local storage or a cookie
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          // Redirect to the dashboard or another page
+          window.location.href = '/js-auth/frontend/home.html';
+        } else {
+          // Authentication failed, show an error message
+          alert(data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
   // JS CODE TO SLIDE CARDS
 function showSignUp() {
   document.getElementById('loginSection').classList.add('hidden-section');

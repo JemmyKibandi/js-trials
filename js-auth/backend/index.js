@@ -58,5 +58,32 @@ app.post('/register', (req, res) => {
   });
 });
 
-// STEP 3: listen for the port
+//CODE TO FETCH DATA
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const sql = 'SELECT * FROM users WHERE email = ?';
+    connection.query(sql, [email], (err, results) => {
+      if (err) {
+        console.error('Error:', err);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+        return;
+      }
+
+      if (results.length > 0 && results[0].password === password) {
+        res.json({ success: true, user: results[0] });
+      } else {
+        res.sendFile(path.join(__dirname, "../frontend/index.html"));
+      }
+    });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, message: 'Internal server errors, wueh' });
+  }
+});
+
+
+// STEP LAST: listen for the port
 app.listen(PORT, () => console.log(`Server is running at port ${PORT}`))
