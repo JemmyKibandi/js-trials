@@ -60,6 +60,17 @@ app.post('/register', (req, res) => {
     }
   });
 });
+// ROUTE TO LOGOUT
+app.post('/logout', (req, res) => {
+  // Clear the user's session data
+  req.session.destroy((err) => {
+      if (err) {
+          console.error('Error destroying session:', err);
+      }
+      // Redirect the user to the login or home page
+      res.redirect('/login'); // Redirect to the desired page
+  });
+});
 
 //CODE TO FETCH DATA
 
