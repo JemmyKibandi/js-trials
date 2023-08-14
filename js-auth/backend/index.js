@@ -48,11 +48,10 @@ app.get("/users", (req, res)=>{
   }
 )})
 // Code to insert data to the database
-app.post('/register', (req, res) => {
-  const { fname, phone, email, pword, actpword } = req.body;
-  
-  const sql = "INSERT INTO `users`(`fname`, `phone`, `email`, `pword`, `actpword`) VALUES (?, ?, ?, ?, ?)";
-  connection.query(sql, [fname, phone, email, pword, actpword], (err, result) => {
+app.post('/register', (req, res) => {  
+  const {newUserId = result.insertId,fname, phone, email, pword, actpword } = req.body;
+  const sql = "INSERT INTO `users`(`user_id`, `fname`, `phone`, `email`, `pword`, `actpword`) VALUES (?, ?, ?, ?, ?, ?)";
+  connection.query(sql, [newUserId, fname, phone, email, pword, actpword], (err, result) => {
     if (err) {
       console.error('Error inserting data:', err);
       res.status(500).send('Internal Server Error');
