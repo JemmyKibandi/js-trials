@@ -1,0 +1,11 @@
+{
+  "name": "js-trials",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JemmyKibandi/js-trials.git",
+  "author": "JemmyKibandi <jemimakibandi378@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ndb": "^1.1.5"
+  }
+}
