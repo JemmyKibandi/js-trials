@@ -307,9 +307,8 @@
       button.addEventListener('click', (e) => {
         const productName = button.getAttribute('data-product');
         const productPrice = parseFloat(button.getAttribute('data-price'));
-        const productImage = button.getAttribute('image'); // Add this line
 
-        cart.push({ name: productName, price: productPrice, image: productImage });
+        cart.push({ name: productName, price: productPrice });
         uniqueItemsSet.add(productName);
 
         updateCart();
@@ -320,12 +319,7 @@
 
     // Update cart display
     function updateCart() {
-      cartItems.innerHTML = '';
-      let total = 0;
-      productImage.classList.add('h-16', 'w-16', 'rounded', 'object-cover');
-      productImage.src = item.image; // Set image source
-      productImage.alt = 'Product Image';
-
+     
       // <div>
       //     <h3 class="text-sm font-semibold">${item.name}</h3>
       //     <p class="text-gray-600">$${item.price}</p>
@@ -337,12 +331,6 @@
       <div class="mt-8">
                 <ul class="space-y-4">
                   <li class="flex items-center gap-4">
-                    <img
-                      src="${item.image}"
-                      alt="${item.name}"          
-                      class="h-16 w-16 rounded object-cover"
-                    />
-        
                     <div>
                       <h3 class="text-sm text-gray-900" id="selectedItem"></h3>        
                       <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
