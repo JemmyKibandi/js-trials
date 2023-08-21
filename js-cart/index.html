@@ -451,11 +451,9 @@
               total += totalPriceForItem;
             }
             const cartData = JSON.stringify(cart);
-const checkoutURL = `checkout.html?cart=${encodeURIComponent(cartData)}`;
-window.location.href = checkoutURL;
-
+            const checkoutURL = `checkout.html?cart=${encodeURIComponent(cartData)}`;
+            window.location.href = checkoutURL;
           });
-      
           cartTotal.textContent = `$${total}`;
           cartButton.textContent = `${cart.length}`;
       
