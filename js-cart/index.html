@@ -450,6 +450,10 @@
               itemsAdded.add(itemName); // Mark item as added
               total += totalPriceForItem;
             }
+            const cartData = JSON.stringify(cart);
+const checkoutURL = `checkout.html?cart=${encodeURIComponent(cartData)}`;
+window.location.href = checkoutURL;
+
           });
       
           cartTotal.textContent = `$${total}`;
