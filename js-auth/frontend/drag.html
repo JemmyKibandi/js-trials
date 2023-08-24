@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Drag and Drop Cards</title>
+</head>
+<body class="bg-gray-100">
+  <div class="flex justify-center items-center h-screen">
+    <div id="cardContainer" class="grid grid-cols-3 gap-4"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+<script>
+    const cardContainer = document.getElementById('cardContainer');
+
+const cardData = [
+  { id: 'card1', content: 'Card 1' },
+  { id: 'card2', content: 'Card 2' },
+  { id: 'card3', content: 'Card 3' },
+];
+
+// Initialize cards
+cardData.forEach(card => {
+  const cardElement = document.createElement('div');
+  cardElement.id = card.id;
+  cardElement.className = 'bg-white p-4 rounded shadow';
+  cardElement.textContent = card.content;
+
+  cardElement.draggable = true;
+  cardElement.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', card.id);
+  });
+
+  cardContainer.appendChild(cardElement);
+});
+
+// Handle dropping
+cardContainer.addEventListener('dragover', (e) => {
+  e.preventDefault();
+});
+
+cardContainer.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const cardId = e.dataTransfer.getData('text/plain');
+  const cardElement = document.getElementById(cardId);
+
+  if (cardElement) {
+    cardContainer.appendChild(cardElement);
+  }
+});
+
+</script>
+</html>
