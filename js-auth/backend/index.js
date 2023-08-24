@@ -99,16 +99,16 @@ app.post('/login', async (req, res) => {
 });
 
 //ROUTE TO CARDS
-  // const filePath = path.join(__dirname, 'drag.html');
-  // fs.readFile(filePath, 'utf-8', (err, content) => {
-  //   if (err) {
-  //     res.writeHead(500);
-  //     res.end('Internal Server Error');
-  //   } else {
-  //     res.writeHead(200, { 'Content-Type': 'text/html' });
-  //     res.end(content);
-  //   }
-  // });
+  const filePath = path.join(__dirname, 'drag.html');
+  fs.readFile(filePath, 'utf-8', (err, content) => {
+    if (err) {
+      res.writeHead(500);
+      res.end('Internal Server Error');
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(content);
+    }
+  });
 
 // STEP LAST: listen for the port
 app.listen(PORT, () => console.log(`Server is running at port ${PORT}`))
