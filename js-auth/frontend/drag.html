@@ -7,47 +7,83 @@
   <title>Drag and Drop Cards</title>
 </head>
 <body class="bg-gray-100">
-  <div class="flex justify-center items-center h-screen">
-    <div id="cardContainer" class="grid grid-cols-3 gap-4"></div>
-  </div>
-  <script src="script.js"></script>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Card</title>
+    <style>
+      body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  width: 200px;
+  height: 100px;
+  background-color: #3490dc;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.drop-area {
+  width: 200px;
+  height: 100px;
+  border: 2px dashed #e53e3e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e53e3e;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card" id="draggableCard" draggable="true">
+        Drag me!
+      </div>
+      <div class="drop-area" id="dropArea">
+        Drop here to change my color
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+  </html>
+  
 </body>
 <script>
-    const cardContainer = document.getElementById('cardContainer');
+const draggableCard = document.getElementById('draggableCard');
+const dropArea = document.getElementById('dropArea');
 
-const cardData = [
-  { id: 'card1', content: 'Card 1' },
-  { id: 'card2', content: 'Card 2' },
-  { id: 'card3', content: 'Card 3' },
-];
-
-// Initialize cards
-cardData.forEach(card => {
-  const cardElement = document.createElement('div');
-  cardElement.id = card.id;
-  cardElement.className = 'bg-white p-4 rounded shadow';
-  cardElement.textContent = card.content;
-
-  cardElement.draggable = true;
-  cardElement.addEventListener('dragstart', (e) => {
-    e.dataTransfer.setData('text/plain', card.id);
-  });
-
-  cardContainer.appendChild(cardElement);
+draggableCard.addEventListener('dragstart', (e) => {
+  e.dataTransfer.setData('text/plain', draggableCard.id);
 });
 
-// Handle dropping
-cardContainer.addEventListener('dragover', (e) => {
+dropArea.addEventListener('dragover', (e) => {
   e.preventDefault();
 });
 
-cardContainer.addEventListener('drop', (e) => {
+dropArea.addEventListener('drop', (e) => {
   e.preventDefault();
-  const cardId = e.dataTransfer.getData('text/plain');
-  const cardElement = document.getElementById(cardId);
+  const draggedCardId = e.dataTransfer.getData('text/plain');
+  const draggedCard = document.getElementById(draggedCardId);
 
-  if (cardElement) {
-    cardContainer.appendChild(cardElement);
+  if (draggedCard) {
+    draggedCard.style.backgroundColor = '#e53e3e';
+    draggedCard.style.color = 'white';
   }
 });
 
