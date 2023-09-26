@@ -15,88 +15,88 @@ app.use(bp.json())
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 //STEP 4: code to connect to the database
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'js_auth'
-});
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
+//   database: 'js_auth'
+// });2
 
-// STEP 5: Show that you've connected to the database
-connection.connect((err, connection) => {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log("Connected to the database")
-  }
-})
+// // STEP 5: Show that you've connected to the database
+// connection.connect((err, connection) => {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log("Connected to the database")
+//   }
+// })
 
-// Define routes
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
-});
+// // Define routes
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, "../frontend/index.html"));
+// });
 
-// Code to GET data to the database
-app.get("/users", (req, res)=>{
-  const sql = "SELECT * FROM `users`";
-  connection.query(sql,(err, results) =>{
-    if (err) {
-      res.status(500).send('Internal Server Error', err);
-    } else {
-      res.send(results);
-    }
-  }
-)})
-// Code to insert data to the database
-app.post('/register', (req, res) => {  
-  const {newUserId = result.insertId,fname, phone, email, pword, actpword } = req.body;
-  const sql = "INSERT INTO `users`(`user_id`, `fname`, `phone`, `email`, `pword`, `actpword`) VALUES (?, ?, ?, ?, ?, ?)";
-  connection.query(sql, [newUserId, fname, phone, email, pword, actpword], (err, result) => {
-    if (err) {
-      console.error('Error inserting data:', err);
-      res.status(500).send('Internal Server Error');
-    } else {
-      res.sendFile(path.join(__dirname, "../frontend/index.html"));
-    }
-  });
-});
-// ROUTE TO LOGOUT
-app.post('/logout', (req, res) => {
-  // Clear the user's session data
-  req.session.destroy((err) => {
-      if (err) {
-          console.error('Error destroying session:', err);
-      }
-      // Redirect the user to the login or home page
-      res.redirect('/login'); // Redirect to the desired page
-  });
-});
+// // Code to GET data to the database
+// app.get("/users", (req, res)=>{
+//   const sql = "SELECT * FROM `users`";
+//   connection.query(sql,(err, results) =>{
+//     if (err) {
+//       res.status(500).send('Internal Server Error', err);
+//     } else {
+//       res.send(results);
+//     }
+//   }
+// )})
+// // Code to insert data to the database
+// app.post('/register', (req, res) => {  
+//   const {newUserId = result.insertId,fname, phone, email, pword, actpword } = req.body;
+//   const sql = "INSERT INTO `users`(`user_id`, `fname`, `phone`, `email`, `pword`, `actpword`) VALUES (?, ?, ?, ?, ?, ?)";
+//   connection.query(sql, [newUserId, fname, phone, email, pword, actpword], (err, result) => {
+//     if (err) {
+//       console.error('Error inserting data:', err);
+//       res.status(500).send('Internal Server Error');
+//     } else {
+//       res.sendFile(path.join(__dirname, "../frontend/index.html"));
+//     }
+//   });
+// });
+// // ROUTE TO LOGOUT
+// app.post('/logout', (req, res) => {
+//   // Clear the user's session data
+//   req.session.destroy((err) => {
+//       if (err) {
+//           console.error('Error destroying session:', err);
+//       }
+//       // Redirect the user to the login or home page
+//       res.redirect('/login'); // Redirect to the desired page
+//   });
+// });
 
-//CODE TO FETCH DATA
+// //CODE TO FETCH DATA
 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+// app.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const sql = 'SELECT * FROM users WHERE email = ?';
-    connection.query(sql, [email], (err, results) => {
-      if (err) {
-        console.error('Error:', err);
-        return res.status(500).json({ success: false, message: 'Internal server error' });
-      }
+//   try {
+//     const sql = 'SELECT * FROM users WHERE email = ?';
+//     connection.query(sql, [email], (err, results) => {
+//       if (err) {
+//         console.error('Error:', err);
+//         return res.status(500).json({ success: false, message: 'Internal server error' });
+//       }
 
-      if (results.length > 0 && results[0].pword === password) {
-        return res.status(200).json({ success: true, user: results[0] });
-      } else {
-        return res.status(401).json({ success: false, message: 'Invalid credentials' });
-      }
+//       if (results.length > 0 && results[0].pword === password) {
+//         return res.status(200).json({ success: true, user: results[0] });
+//       } else {
+//         return res.status(401).json({ success: false, message: 'Invalid credentials' });
+//       }
       
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-});
+//     });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ success: false, message: 'Internal server error' });
+//   }
+// });
 
 //ROUTE TO CARDS
   // const filePath = path.join(__dirname, 'drag.html');
